@@ -11,7 +11,7 @@ class SqlAlchemyAlertRepository:
 
     async def list_alerts(self, skip: int, max: int):
         result = await self.session.execute(
-            select(Alert).offset(skip + max).limit(max).order_by(Alert.created_at.desc())
+            select(Alert).offset(skip).limit(max).order_by(Alert.created_at.desc())
         )
         return result.scalars().all()
 
