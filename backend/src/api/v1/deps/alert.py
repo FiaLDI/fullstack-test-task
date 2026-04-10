@@ -1,0 +1,19 @@
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.core.database import async_session_maker
+from src.infrastructure.repositories.alert_repo import SqlAlchemyAlertRepository
+from src.domain.files.service import FilesDomainService
+from src.domain.alert.service import AlertsDomainService
+
+
+async def get_session():
+    async with async_session_maker() as session:
+        yield session
+
+
+def get_alert_service(
+    session: AsyncSession = Depends(get_session),
+) -> FilesDomainService:
+    repo = SqlAlchemyAlertRepository(session)
+    return AlertsDomainService(repo)
