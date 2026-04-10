@@ -9,15 +9,9 @@ class SqlAlchemyFileRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def list_files(self):
+    async def list_files(self, skip: int, max: int):
         result = await self.session.execute(
-            select(StoredFile).order_by(StoredFile.created_at.desc())
-        )
-        return result.scalars().all()
-
-    async def list_alerts(self):
-        result = await self.session.execute(
-            select(Alert).order_by(Alert.created_at.desc())
+            select(StoredFile).offset(skip).limit(max).order_by(StoredFile.created_at.desc())
         )
         return result.scalars().all()
 
@@ -47,11 +41,4 @@ class SqlAlchemyFileRepository:
 
         await self.session.delete(file)
         await self.session.commit()
-
-    async def create_alert(self, file_id: str, level: str, message: str):
-        alert = Alert(file_id=file_id, level=level, message=message)
-        self.session.add(alert)
-        await self.session.commit()
-        await self.session.refresh(alert)
-        return alert
     

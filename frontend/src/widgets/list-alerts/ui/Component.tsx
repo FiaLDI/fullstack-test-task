@@ -1,9 +1,10 @@
 import { UiPack, Helpers } from "@/shared";
 import { IComponentProps } from "./interface";
+import { PaginationChange } from "@/features/pagination-change";
 
 export const Component = (props: IComponentProps) => {
 
-    const {alerts, isLoading} = props;
+    const {pagination, changePagination, alerts, isLoading} = props;
 
     const {
         Badge,
@@ -16,8 +17,9 @@ export const Component = (props: IComponentProps) => {
         <Card className="shadow-sm border-0">
             <Card.Header className="bg-white border-0 pt-4 px-4">
                 <div className="d-flex justify-content-between align-items-center">
-                <h2 className="h5 mb-0">Алерты</h2>
-                <Badge bg="secondary">{alerts.length}</Badge>
+                    <h2 className="h5 mb-0">Алерты</h2>
+                    <PaginationChange pagination={pagination} handleChange={changePagination} />
+                    <Badge bg="secondary">{alerts.length}</Badge>
                 </div>
             </Card.Header>
             <Card.Body className="px-4 pb-4">

@@ -12,13 +12,17 @@ export const usePage = () => {
     const [showModal, setShowModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [pagination, SetPagination] = useState<{max: number, skip: number}>({
+    const [paginationFiles, setPaginationFiles] = useState<{max: number, skip: number}>({
         max: 2,
-        skip: 1,
+        skip: 0,
+    })
+    const [paginationAlerts, setPaginationAlerts] = useState<{max: number, skip: number}>({
+        max: 2,
+        skip: 0,
     })
 
     const { loadData } = useUpdateFiles();
-    const { submit } = useAddFile();
+    const addFile = useAddFile();
 
     const handleLoad = async () => {
         setIsLoading(true);
@@ -26,8 +30,8 @@ export const usePage = () => {
 
         try {
             const { files, alerts } = await loadData(
-                pagination.skip, 
-                pagination.max
+                paginationFiles, 
+                paginationAlerts
             );
 
             setFiles(files);
@@ -45,7 +49,7 @@ export const usePage = () => {
         e.preventDefault();
 
         try {
-            await submit();
+            await addFile.submit();
 
             setShowModal(false);
             await handleLoad();
@@ -54,9 +58,21 @@ export const usePage = () => {
         }
     };
 
+    const handleChangePaginationFiles = async(max, skip) => {
+        setPaginationFiles({max, skip})
+    }
+
+    const handleChangePaginationAlerts = async(max, skip) => {
+        setPaginationAlerts({max, skip})
+    }
+
     useEffect(()=>{
         handleLoad()
     }, [])
+
+    useEffect(()=>{
+        handleLoad()
+    }, [paginationFiles.max, paginationFiles.skip, paginationAlerts.max, paginationAlerts.skip])
 
     return {
         files,
@@ -67,6 +83,11 @@ export const usePage = () => {
         setErrorMessage,
         isLoading,
         handleLoad,
-        handleSubmit
+        handleSubmit,
+        addFile,
+        handleChangePaginationFiles,
+        handleChangePaginationAlerts,
+        paginationFiles,
+        paginationAlerts
     }
 }

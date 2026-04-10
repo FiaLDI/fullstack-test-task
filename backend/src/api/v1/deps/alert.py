@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core.database import async_session_maker
 from src.infrastructure.repositories.alert_repo import SqlAlchemyAlertRepository
-from src.infrastructure.repositories.file_repo import SqlAlchemyFileRepository
 from src.domain.files.service import FilesDomainService
 from src.domain.alert.service import AlertsDomainService
 
@@ -13,8 +12,8 @@ async def get_session():
         yield session
 
 
-def get_file_service(
+def get_alert_service(
     session: AsyncSession = Depends(get_session),
 ) -> FilesDomainService:
-    repo = SqlAlchemyFileRepository(session)
-    return FilesDomainService(repo)
+    repo = SqlAlchemyAlertRepository(session)
+    return AlertsDomainService(repo)

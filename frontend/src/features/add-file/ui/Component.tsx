@@ -1,11 +1,10 @@
 "use client";
 
-import { useAddFile } from "../model/useAddFile";
 import { UiPack } from "@/shared";
 
-export const Component = ({handleSubmit, showModal, setShowModal}) => {
+export const Component = ({handleSubmit, showModal, setShowModal, addFile}) => {
 
-    const {title, setTitle, setSelectedFile, isSubmitting} = useAddFile();
+    const {title, setTitle, setSelectedFile, isSubmitting} = addFile;
 
     const {
       Button,
@@ -15,7 +14,7 @@ export const Component = ({handleSubmit, showModal, setShowModal}) => {
 
     return (
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Form onSubmit={handleSubmit}>
+        <Form  onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Добавить файл</Modal.Title>
           </Modal.Header>

@@ -16,8 +16,13 @@ export default function Page() {
     setShowModal,
     errorMessage,
     isLoading,
+    addFile,
     handleLoad,
-    handleSubmit
+    handleSubmit,
+    handleChangePaginationFiles,
+    handleChangePaginationAlerts,
+    paginationFiles,
+    paginationAlerts
   } = usePage();
 
   return (
@@ -32,8 +37,8 @@ export default function Page() {
             </Alert>
           )}
 
-          <ListFiles files={files} isLoading={isLoading}/> 
-          <ListAlerts alerts={alerts} isLoading={isLoading} />
+          <ListFiles files={files} isLoading={isLoading} changePagination={handleChangePaginationFiles} pagination={paginationFiles}/> 
+          <ListAlerts alerts={alerts} isLoading={isLoading} changePagination={handleChangePaginationAlerts} pagination={paginationAlerts}/>
         </Col>
       </Row>
 
@@ -41,6 +46,7 @@ export default function Page() {
         handleSubmit={handleSubmit} 
         showModal={showModal} 
         setShowModal={setShowModal}
+        addFile={addFile}
       />
     </Container>
   );

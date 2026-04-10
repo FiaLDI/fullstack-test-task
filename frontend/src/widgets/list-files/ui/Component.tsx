@@ -1,10 +1,11 @@
 import { DownloadFile } from "@/features/download-file";
 import { IComponentProps } from "./interface";
 import { UiPack, Helpers } from "@/shared"
+import { PaginationChange } from "@/features/pagination-change";
 
 export const Component = (props: IComponentProps) => {
 
-    const {files, isLoading} = props;
+    const {pagination, changePagination, files, isLoading} = props;
     const {
         Badge,
         Button,
@@ -18,6 +19,7 @@ export const Component = (props: IComponentProps) => {
             <Card.Header className="bg-white border-0 pt-4 px-4">
                 <div className="d-flex justify-content-between align-items-center">
                 <h2 className="h5 mb-0">Файлы</h2>
+                <PaginationChange pagination={pagination} handleChange={changePagination} />
                 <Badge bg="secondary">{files.length}</Badge>
                 </div>
             </Card.Header>

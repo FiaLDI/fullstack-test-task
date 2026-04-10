@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, Query
 from fastapi.responses import FileResponse
 from pathlib import Path
 from uuid import uuid4
@@ -17,8 +17,12 @@ STORAGE_DIR.mkdir(exist_ok=True)
 
 
 @router.get("/", response_model=list[FileItem])
-async def list_files(service: FilesDomainService = Depends(get_file_service)):
-    return await service.list_files()
+async def list_files(
+    skip: int = Query(0, ge=0),
+    max: int = Query(10, ge=1, le=100),
+    service: FilesDomainService = Depends(get_file_service)
+):
+    return await service.list_files(skip=skip, max=max)
 
 @router.post("/", response_model=FileItem, status_code=201)
 async def create_file(
