@@ -7,7 +7,7 @@ import mimetypes
 from src.api.v1.deps.files import get_file_service
 from src.domain.files.service import FilesDomainService
 from src.infrastructure.db.models.file import StoredFile
-from src.schemas import FileItem, AlertItem, FileUpdate
+from src.infrastructure.db.schemas import FileItem, AlertItem, FileUpdate
 from src.infrastructure.tasks.file_tasks import scan_file_for_threats
 
 router = APIRouter()

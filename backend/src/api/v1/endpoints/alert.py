@@ -3,7 +3,7 @@ from pathlib import Path
 
 from src.api.v1.deps.alert import get_alert_service
 from src.domain.alert.service import AlertsDomainService
-from src.schemas import AlertItem
+from src.infrastructure.db.schemas import AlertItem
 
 router = APIRouter()
 
